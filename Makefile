@@ -21,3 +21,6 @@ lint-fix:
 
 organize-imports:
 	@gci write --custom-order -s standard -s "prefix(github.com/nix-united/golang-echo-boilerplate)" -s default --skip-generated --skip-vendor .
+
+goose-create:
+	go tool goose -dir migrations -s create $(NAME) sql

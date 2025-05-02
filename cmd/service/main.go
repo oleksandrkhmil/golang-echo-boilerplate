@@ -59,6 +59,15 @@ func run() error {
 		return fmt.Errorf("new db connection: %w", err)
 	}
 
+	sqlDB, err := gormDB.DB()
+	if err != nil {
+		return fmt.Errorf("get sql db: %w", err)
+	}
+
+	if err := db.Migrate(sqlDB); err != nil {
+		return fmt.Errorf("migrate: %w", err)
+	}
+
 	app := server.NewServer(echo.New(), gormDB, &cfg)
 
 	routes.ConfigureRoutes(app)
