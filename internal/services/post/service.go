@@ -9,8 +9,8 @@ import (
 
 type postRepository interface {
 	Create(post *models.Post) error
-	GetPosts(posts *[]models.Post)
-	GetPost(post *models.Post, id int)
+	GetPosts() ([]models.Post, error)
+	GetPost(id int) (models.Post, error)
 	Update(post *models.Post)
 	Delete(post *models.Post)
 }
@@ -32,11 +32,11 @@ func (s Service) Create(post *models.Post) error {
 }
 
 func (s Service) GetPosts(posts *[]models.Post) {
-	s.postRepository.GetPosts(posts)
+	s.postRepository.GetPosts()
 }
 
 func (s Service) GetPost(post *models.Post, id int) {
-	s.postRepository.GetPost(post, id)
+	s.postRepository.GetPost(id)
 }
 
 func (s Service) Update(post *models.Post, updatePostRequest *requests.UpdatePostRequest) {
