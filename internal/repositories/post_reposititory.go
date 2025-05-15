@@ -25,8 +25,13 @@ func (r PostRepository) Create(post *models.Post) error {
 	return nil
 }
 
-func (r PostRepository) GetPosts(posts *[]models.Post) {
-	r.db.Preload("User").Find(posts)
+func (r PostRepository) GetPosts() ([]models.Post, error) {
+	var posts []models.Post
+	if err := r.db.Find(&posts).Error; err != nil {
+		return nil, fmt.Errorf("execute select all posts query: %w", err)
+	}
+
+	return posts, nil
 }
 
 func (r PostRepository) GetPost(id int) (models.Post, error) {
